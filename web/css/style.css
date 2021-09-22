@@ -16,3 +16,7 @@ body {
 .padded {
     padding: 15px;
 }
+.sitemap-import {
+    float: right;
+    margin: -45px 15px 0 0;
+}
