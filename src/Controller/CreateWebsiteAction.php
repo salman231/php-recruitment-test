@@ -5,7 +5,7 @@ namespace Snowdog\DevTest\Controller;
 use Snowdog\DevTest\Model\UserManager;
 use Snowdog\DevTest\Model\WebsiteManager;
 
-class CreateWebsiteAction
+class CreateWebsiteAction extends \Snowdog\DevTest\Controller\BaseAction
 {
     /**
      * @var UserManager
@@ -18,6 +18,7 @@ class CreateWebsiteAction
 
     public function __construct(UserManager $userManager, WebsiteManager $websiteManager)
     {
+        parent::__construct();
         $this->userManager = $userManager;
         $this->websiteManager = $websiteManager;
     }

@@ -5,7 +5,7 @@ namespace Snowdog\DevTest\Controller;
 use Snowdog\DevTest\Model\User;
 use Snowdog\DevTest\Model\UserManager;
 
-class LoginAction
+class LoginAction extends \Snowdog\DevTest\Controller\BaseAction
 {
     /**
      * @var UserManager
@@ -14,6 +14,7 @@ class LoginAction
 
     public function __construct(UserManager $userManager)
     {
+        parent::__construct();
         $this->userManager = $userManager;
     }
 

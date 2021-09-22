@@ -6,7 +6,7 @@ use Snowdog\DevTest\Model\User;
 use Snowdog\DevTest\Model\UserManager;
 use Snowdog\DevTest\Model\WebsiteManager;
 
-class IndexAction
+class IndexAction extends \Snowdog\DevTest\Controller\BaseAction
 {
 
     /**
@@ -21,6 +21,7 @@ class IndexAction
 
     public function __construct(UserManager $userManager, WebsiteManager $websiteManager)
     {
+        parent::__construct();
         $this->websiteManager = $websiteManager;
         if (isset($_SESSION['login'])) {
             $this->user = $userManager->getByLogin($_SESSION['login']);
