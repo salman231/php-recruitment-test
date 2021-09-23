@@ -14,6 +14,7 @@
 
     <!-- Custom styles for this template -->
     <link href="/css/style.css" rel="stylesheet">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/jquery/3.6.0/jquery.min.js"></script>
 </head>
 
 <body>
@@ -30,7 +31,7 @@
     <div>
 
         <div class="padded">
-            <form class="form-inline" method="post" action="/varnish">
+            <form class="form-inline" method="post" action="/addVarnish">
                 <div class="form-group">
                     <label for="exampleInputName2">IP</label>
                     <input type="text" name="ip" class="form-control" id="exampleInputName2"
@@ -42,6 +43,7 @@
 
         <div class="padded">
             <h1>Varnish Assignments</h1>
+            <p>Check/Uncheck the box to link or unlink the website with server</p>
         </div>
 
         <?php foreach ($this->getVarnishes() as $varnish): /** @var \Snowdog\DevTest\Model\Varnish $varnish */ ?>
@@ -57,7 +59,7 @@
                     </tr>
                     <?php foreach ($this->getWebsites() as $website): /** @var \Snowdog\DevTest\Model\Website $website */ ?>
                         <tr>
-                            <td><input type="checkbox" <?= in_array($website->getWebsiteId(), $websiteIds) ? 'checked="checked"' : '' ?>/></td>
+                            <td><input class="association" data-id="<?= $website->getWebsiteId() ?>" data-server="<?= $varnish->getServerId() ?>" type="checkbox" <?= in_array($website->getWebsiteId(), $websiteIds) ? 'checked="checked"' : '' ?>/></td>
                             <td><?= $website->getName() ?></td>
                             <td><?= $website->getHostname() ?></td>
                         </tr>
@@ -70,6 +72,31 @@
 
 </div><!-- /.container -->
 
-
+<script>
+    $(document).on('click', '.association', function(){
+        var link = false;
+        if($(this).prop("checked") === true){
+            link = true;
+        }
+        var websiteId = $(this).attr("data-id");
+        var serverId = $(this).attr("data-server");
+        $.ajax({
+            url: '/linkVarnish',
+            type: "POST",
+            dataType: "json",
+            data: {
+                "webId": websiteId,
+                "link": link,
+                "serverId": serverId
+            },
+            success: function (data)
+            {
+                console.log(data);
+                location.reload();
+            }
+        });
+        return false;
+    });
+</script>
 </body>
 </html>

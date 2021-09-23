@@ -61,7 +61,12 @@ class VarnishesAction
         return $ids;
     }
 
-    public function execute() {
+    public function execute()
+    {
+        if (!isset($_SESSION['login'])) {
+            require __DIR__ . '/../view/login.phtml';
+            return;
+        }
 
         include __DIR__ . '/../view/varnish.phtml';
     }

@@ -26,6 +26,18 @@ class CreateVarnishLinkAction
 
     public function execute()
     {
-        // TODO: add module logic here
+
+        $web = $_POST['webId'];
+        $server = $_POST['serverId'];
+        $link = $_POST['link'];
+
+        if ($link == "true") {
+            $this->varnishManager->link($server, $web);
+        } else {
+            $this->varnishManager->unlink($server, $web);
+        }
+
+        echo true;
+        exit;
     }
 }
