@@ -34,6 +34,10 @@
         <?php if ($this->user): ?>
             <p class="bg-success">Hello <?= $this->user->getDisplayName() ?>!</p>
             <p><a class="sitemap-import" href="#" id="importMe">Import Sitemap</a></p>
+            <br>
+            <h4><p>Total number of pages: <b><?= $this->loggedInUserTotalPages() ?></b></p></h4>
+            <h4><p>Least recently visited page: <b><?= $this->getRecentlyPageVisited() ?></b></p></h4>
+            <h4><p>Most recently visited page: <b><?= $this->getLeastPageVisited() ?></b></p></h4>
 
             <div class="padded">
                 <form class="form-inline" method="post" action="/website">

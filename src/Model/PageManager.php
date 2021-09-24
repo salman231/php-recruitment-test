@@ -49,4 +49,19 @@ class PageManager
         $statement->bindParam(':pageId', $pageId, \PDO::PARAM_INT);
         $statement->execute();
     }
+
+    public function getUsersPageVisited(User $user, $orderBy)
+    {
+        $userId = $user->getUserId();
+        /** @var \PDOStatement $statement */
+        if($orderBy == 'DESC') {
+            $statement = $this->database->prepare('SELECT pages.url FROM pages INNER JOIN websites ON pages.website_id=websites.website_id WHERE websites.user_id = :userId AND last_page_visits IS NOT NULL ORDER BY pages.last_page_visits DESC');
+        }else{
+            $statement = $this->database->prepare('SELECT pages.url FROM pages INNER JOIN websites ON pages.website_id=websites.website_id WHERE websites.user_id = :userId AND last_page_visits IS NOT NULL ORDER BY pages.last_page_visits ASC');
+        }
+        $statement->bindParam(':userId', $userId, \PDO::PARAM_INT);
+        $statement->execute();
+        return $statement->fetchObject(Page::class);
+    }
 }
+
